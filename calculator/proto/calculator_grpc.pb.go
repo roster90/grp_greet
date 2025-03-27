@@ -32,7 +32,7 @@ type CalculatorServiceClient interface {
 	Sum(ctx context.Context, in *CalculatorRequest, opts ...grpc.CallOption) (*CalculatorResponse, error)
 	Primes(ctx context.Context, in *PrimesRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[PrimesResponse], error)
 	ComputeAverage(ctx context.Context, opts ...grpc.CallOption) (grpc.ClientStreamingClient[ComputeAverageRequest, ComputeAverageResponse], error)
-	FindMaximum(ctx context.Context, opts ...grpc.CallOption) (grpc.ClientStreamingClient[CalculatorRequest, CalculatorResponse], error)
+	FindMaximum(ctx context.Context, opts ...grpc.CallOption) (grpc.BidiStreamingClient[FindMaximumRequest, FindMaximumResponse], error)
 }
 
 type calculatorServiceClient struct {
@@ -85,18 +85,18 @@ func (c *calculatorServiceClient) ComputeAverage(ctx context.Context, opts ...gr
 // This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
 type CalculatorService_ComputeAverageClient = grpc.ClientStreamingClient[ComputeAverageRequest, ComputeAverageResponse]
 
-func (c *calculatorServiceClient) FindMaximum(ctx context.Context, opts ...grpc.CallOption) (grpc.ClientStreamingClient[CalculatorRequest, CalculatorResponse], error) {
+func (c *calculatorServiceClient) FindMaximum(ctx context.Context, opts ...grpc.CallOption) (grpc.BidiStreamingClient[FindMaximumRequest, FindMaximumResponse], error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	stream, err := c.cc.NewStream(ctx, &CalculatorService_ServiceDesc.Streams[2], CalculatorService_FindMaximum_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &grpc.GenericClientStream[CalculatorRequest, CalculatorResponse]{ClientStream: stream}
+	x := &grpc.GenericClientStream[FindMaximumRequest, FindMaximumResponse]{ClientStream: stream}
 	return x, nil
 }
 
 // This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type CalculatorService_FindMaximumClient = grpc.ClientStreamingClient[CalculatorRequest, CalculatorResponse]
+type CalculatorService_FindMaximumClient = grpc.BidiStreamingClient[FindMaximumRequest, FindMaximumResponse]
 
 // CalculatorServiceServer is the server API for CalculatorService service.
 // All implementations must embed UnimplementedCalculatorServiceServer
@@ -105,7 +105,7 @@ type CalculatorServiceServer interface {
 	Sum(context.Context, *CalculatorRequest) (*CalculatorResponse, error)
 	Primes(*PrimesRequest, grpc.ServerStreamingServer[PrimesResponse]) error
 	ComputeAverage(grpc.ClientStreamingServer[ComputeAverageRequest, ComputeAverageResponse]) error
-	FindMaximum(grpc.ClientStreamingServer[CalculatorRequest, CalculatorResponse]) error
+	FindMaximum(grpc.BidiStreamingServer[FindMaximumRequest, FindMaximumResponse]) error
 	mustEmbedUnimplementedCalculatorServiceServer()
 }
 
@@ -125,7 +125,7 @@ func (UnimplementedCalculatorServiceServer) Primes(*PrimesRequest, grpc.ServerSt
 func (UnimplementedCalculatorServiceServer) ComputeAverage(grpc.ClientStreamingServer[ComputeAverageRequest, ComputeAverageResponse]) error {
 	return status.Errorf(codes.Unimplemented, "method ComputeAverage not implemented")
 }
-func (UnimplementedCalculatorServiceServer) FindMaximum(grpc.ClientStreamingServer[CalculatorRequest, CalculatorResponse]) error {
+func (UnimplementedCalculatorServiceServer) FindMaximum(grpc.BidiStreamingServer[FindMaximumRequest, FindMaximumResponse]) error {
 	return status.Errorf(codes.Unimplemented, "method FindMaximum not implemented")
 }
 func (UnimplementedCalculatorServiceServer) mustEmbedUnimplementedCalculatorServiceServer() {}
@@ -186,11 +186,11 @@ func _CalculatorService_ComputeAverage_Handler(srv interface{}, stream grpc.Serv
 type CalculatorService_ComputeAverageServer = grpc.ClientStreamingServer[ComputeAverageRequest, ComputeAverageResponse]
 
 func _CalculatorService_FindMaximum_Handler(srv interface{}, stream grpc.ServerStream) error {
-	return srv.(CalculatorServiceServer).FindMaximum(&grpc.GenericServerStream[CalculatorRequest, CalculatorResponse]{ServerStream: stream})
+	return srv.(CalculatorServiceServer).FindMaximum(&grpc.GenericServerStream[FindMaximumRequest, FindMaximumResponse]{ServerStream: stream})
 }
 
 // This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type CalculatorService_FindMaximumServer = grpc.ClientStreamingServer[CalculatorRequest, CalculatorResponse]
+type CalculatorService_FindMaximumServer = grpc.BidiStreamingServer[FindMaximumRequest, FindMaximumResponse]
 
 // CalculatorService_ServiceDesc is the grpc.ServiceDesc for CalculatorService service.
 // It's only intended for direct use with grpc.RegisterService,
@@ -218,6 +218,7 @@ var CalculatorService_ServiceDesc = grpc.ServiceDesc{
 		{
 			StreamName:    "FindMaximum",
 			Handler:       _CalculatorService_FindMaximum_Handler,
+			ServerStreams: true,
 			ClientStreams: true,
 		},
 	},

@@ -12,7 +12,7 @@ func doLongGreet(c pb.GreetServiceClient) {
 
 	log.Printf("Starting to do a doLongGreet invoke")
 
-	req := []*pb.GreetRequest{
+	reqs := []*pb.GreetRequest{
 		{FirstName: "Roster"},
 		{FirstName: "Kelley"},
 		{FirstName: "XUnicorn"},
@@ -24,7 +24,7 @@ func doLongGreet(c pb.GreetServiceClient) {
 		log.Fatalf("Failed to calling doLongGreet: %v", err)
 	}
 
-	for _, req := range req {
+	for _, req := range reqs {
 		log.Printf("Sending request: %v\n", req)
 		stream.Send(req)
 		time.Sleep(1 * time.Second)

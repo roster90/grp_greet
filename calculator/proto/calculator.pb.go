@@ -293,6 +293,94 @@ func (x *ComputeAverageResponse) GetResult() float32 {
 	return 0
 }
 
+type FindMaximumRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Number        int32                  `protobuf:"varint,1,opt,name=number,proto3" json:"number,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *FindMaximumRequest) Reset() {
+	*x = FindMaximumRequest{}
+	mi := &file_calculator_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *FindMaximumRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*FindMaximumRequest) ProtoMessage() {}
+
+func (x *FindMaximumRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_calculator_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use FindMaximumRequest.ProtoReflect.Descriptor instead.
+func (*FindMaximumRequest) Descriptor() ([]byte, []int) {
+	return file_calculator_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *FindMaximumRequest) GetNumber() int32 {
+	if x != nil {
+		return x.Number
+	}
+	return 0
+}
+
+type FindMaximumResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Result        int32                  `protobuf:"varint,1,opt,name=result,proto3" json:"result,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *FindMaximumResponse) Reset() {
+	*x = FindMaximumResponse{}
+	mi := &file_calculator_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *FindMaximumResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*FindMaximumResponse) ProtoMessage() {}
+
+func (x *FindMaximumResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_calculator_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use FindMaximumResponse.ProtoReflect.Descriptor instead.
+func (*FindMaximumResponse) Descriptor() ([]byte, []int) {
+	return file_calculator_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *FindMaximumResponse) GetResult() int32 {
+	if x != nil {
+		return x.Result
+	}
+	return 0
+}
+
 var File_calculator_proto protoreflect.FileDescriptor
 
 const file_calculator_proto_rawDesc = "" +
@@ -311,12 +399,16 @@ const file_calculator_proto_rawDesc = "" +
 	"\x15ComputeAverageRequest\x12\x16\n" +
 	"\x06number\x18\x01 \x01(\x02R\x06number\"0\n" +
 	"\x16ComputeAverageResponse\x12\x16\n" +
-	"\x06result\x18\x01 \x01(\x02R\x06result2\xc7\x02\n" +
+	"\x06result\x18\x01 \x01(\x02R\x06result\",\n" +
+	"\x12FindMaximumRequest\x12\x16\n" +
+	"\x06number\x18\x01 \x01(\x05R\x06number\"-\n" +
+	"\x13FindMaximumResponse\x12\x16\n" +
+	"\x06result\x18\x01 \x01(\x05R\x06result2\xcb\x02\n" +
 	"\x11CalculatorService\x12D\n" +
 	"\x03Sum\x12\x1d.calculator.CalculatorRequest\x1a\x1e.calculator.CalculatorResponse\x12A\n" +
 	"\x06Primes\x12\x19.calculator.PrimesRequest\x1a\x1a.calculator.PrimesResponse0\x01\x12Y\n" +
-	"\x0eComputeAverage\x12!.calculator.ComputeAverageRequest\x1a\".calculator.ComputeAverageResponse(\x01\x12N\n" +
-	"\vFindMaximum\x12\x1d.calculator.CalculatorRequest\x1a\x1e.calculator.CalculatorResponse(\x01B0Z.github.com/roster90/grp_greet/calculator/protob\x06proto3"
+	"\x0eComputeAverage\x12!.calculator.ComputeAverageRequest\x1a\".calculator.ComputeAverageResponse(\x01\x12R\n" +
+	"\vFindMaximum\x12\x1e.calculator.FindMaximumRequest\x1a\x1f.calculator.FindMaximumResponse(\x010\x01B0Z.github.com/roster90/grp_greet/calculator/protob\x06proto3"
 
 var (
 	file_calculator_proto_rawDescOnce sync.Once
@@ -330,7 +422,7 @@ func file_calculator_proto_rawDescGZIP() []byte {
 	return file_calculator_proto_rawDescData
 }
 
-var file_calculator_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
+var file_calculator_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
 var file_calculator_proto_goTypes = []any{
 	(*CalculatorRequest)(nil),      // 0: calculator.CalculatorRequest
 	(*CalculatorResponse)(nil),     // 1: calculator.CalculatorResponse
@@ -338,16 +430,18 @@ var file_calculator_proto_goTypes = []any{
 	(*PrimesResponse)(nil),         // 3: calculator.PrimesResponse
 	(*ComputeAverageRequest)(nil),  // 4: calculator.ComputeAverageRequest
 	(*ComputeAverageResponse)(nil), // 5: calculator.ComputeAverageResponse
+	(*FindMaximumRequest)(nil),     // 6: calculator.FindMaximumRequest
+	(*FindMaximumResponse)(nil),    // 7: calculator.FindMaximumResponse
 }
 var file_calculator_proto_depIdxs = []int32{
 	0, // 0: calculator.CalculatorService.Sum:input_type -> calculator.CalculatorRequest
 	2, // 1: calculator.CalculatorService.Primes:input_type -> calculator.PrimesRequest
 	4, // 2: calculator.CalculatorService.ComputeAverage:input_type -> calculator.ComputeAverageRequest
-	0, // 3: calculator.CalculatorService.FindMaximum:input_type -> calculator.CalculatorRequest
+	6, // 3: calculator.CalculatorService.FindMaximum:input_type -> calculator.FindMaximumRequest
 	1, // 4: calculator.CalculatorService.Sum:output_type -> calculator.CalculatorResponse
 	3, // 5: calculator.CalculatorService.Primes:output_type -> calculator.PrimesResponse
 	5, // 6: calculator.CalculatorService.ComputeAverage:output_type -> calculator.ComputeAverageResponse
-	1, // 7: calculator.CalculatorService.FindMaximum:output_type -> calculator.CalculatorResponse
+	7, // 7: calculator.CalculatorService.FindMaximum:output_type -> calculator.FindMaximumResponse
 	4, // [4:8] is the sub-list for method output_type
 	0, // [0:4] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
@@ -366,7 +460,7 @@ func file_calculator_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_calculator_proto_rawDesc), len(file_calculator_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   6,
+			NumMessages:   8,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

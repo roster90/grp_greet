@@ -381,6 +381,94 @@ func (x *FindMaximumResponse) GetResult() int32 {
 	return 0
 }
 
+type SqrtRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Number        int32                  `protobuf:"varint,1,opt,name=number,proto3" json:"number,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SqrtRequest) Reset() {
+	*x = SqrtRequest{}
+	mi := &file_calculator_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SqrtRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SqrtRequest) ProtoMessage() {}
+
+func (x *SqrtRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_calculator_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SqrtRequest.ProtoReflect.Descriptor instead.
+func (*SqrtRequest) Descriptor() ([]byte, []int) {
+	return file_calculator_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *SqrtRequest) GetNumber() int32 {
+	if x != nil {
+		return x.Number
+	}
+	return 0
+}
+
+type SqrtResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Result        float32                `protobuf:"fixed32,1,opt,name=result,proto3" json:"result,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SqrtResponse) Reset() {
+	*x = SqrtResponse{}
+	mi := &file_calculator_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SqrtResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SqrtResponse) ProtoMessage() {}
+
+func (x *SqrtResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_calculator_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SqrtResponse.ProtoReflect.Descriptor instead.
+func (*SqrtResponse) Descriptor() ([]byte, []int) {
+	return file_calculator_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *SqrtResponse) GetResult() float32 {
+	if x != nil {
+		return x.Result
+	}
+	return 0
+}
+
 var File_calculator_proto protoreflect.FileDescriptor
 
 const file_calculator_proto_rawDesc = "" +
@@ -403,12 +491,17 @@ const file_calculator_proto_rawDesc = "" +
 	"\x12FindMaximumRequest\x12\x16\n" +
 	"\x06number\x18\x01 \x01(\x05R\x06number\"-\n" +
 	"\x13FindMaximumResponse\x12\x16\n" +
-	"\x06result\x18\x01 \x01(\x05R\x06result2\xcb\x02\n" +
+	"\x06result\x18\x01 \x01(\x05R\x06result\"%\n" +
+	"\vSqrtRequest\x12\x16\n" +
+	"\x06number\x18\x01 \x01(\x05R\x06number\"&\n" +
+	"\fSqrtResponse\x12\x16\n" +
+	"\x06result\x18\x01 \x01(\x02R\x06result2\x86\x03\n" +
 	"\x11CalculatorService\x12D\n" +
 	"\x03Sum\x12\x1d.calculator.CalculatorRequest\x1a\x1e.calculator.CalculatorResponse\x12A\n" +
 	"\x06Primes\x12\x19.calculator.PrimesRequest\x1a\x1a.calculator.PrimesResponse0\x01\x12Y\n" +
 	"\x0eComputeAverage\x12!.calculator.ComputeAverageRequest\x1a\".calculator.ComputeAverageResponse(\x01\x12R\n" +
-	"\vFindMaximum\x12\x1e.calculator.FindMaximumRequest\x1a\x1f.calculator.FindMaximumResponse(\x010\x01B0Z.github.com/roster90/grp_greet/calculator/protob\x06proto3"
+	"\vFindMaximum\x12\x1e.calculator.FindMaximumRequest\x1a\x1f.calculator.FindMaximumResponse(\x010\x01\x129\n" +
+	"\x04Sqrt\x12\x17.calculator.SqrtRequest\x1a\x18.calculator.SqrtResponseB0Z.github.com/roster90/grp_greet/calculator/protob\x06proto3"
 
 var (
 	file_calculator_proto_rawDescOnce sync.Once
@@ -422,7 +515,7 @@ func file_calculator_proto_rawDescGZIP() []byte {
 	return file_calculator_proto_rawDescData
 }
 
-var file_calculator_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
+var file_calculator_proto_msgTypes = make([]protoimpl.MessageInfo, 10)
 var file_calculator_proto_goTypes = []any{
 	(*CalculatorRequest)(nil),      // 0: calculator.CalculatorRequest
 	(*CalculatorResponse)(nil),     // 1: calculator.CalculatorResponse
@@ -432,18 +525,22 @@ var file_calculator_proto_goTypes = []any{
 	(*ComputeAverageResponse)(nil), // 5: calculator.ComputeAverageResponse
 	(*FindMaximumRequest)(nil),     // 6: calculator.FindMaximumRequest
 	(*FindMaximumResponse)(nil),    // 7: calculator.FindMaximumResponse
+	(*SqrtRequest)(nil),            // 8: calculator.SqrtRequest
+	(*SqrtResponse)(nil),           // 9: calculator.SqrtResponse
 }
 var file_calculator_proto_depIdxs = []int32{
 	0, // 0: calculator.CalculatorService.Sum:input_type -> calculator.CalculatorRequest
 	2, // 1: calculator.CalculatorService.Primes:input_type -> calculator.PrimesRequest
 	4, // 2: calculator.CalculatorService.ComputeAverage:input_type -> calculator.ComputeAverageRequest
 	6, // 3: calculator.CalculatorService.FindMaximum:input_type -> calculator.FindMaximumRequest
-	1, // 4: calculator.CalculatorService.Sum:output_type -> calculator.CalculatorResponse
-	3, // 5: calculator.CalculatorService.Primes:output_type -> calculator.PrimesResponse
-	5, // 6: calculator.CalculatorService.ComputeAverage:output_type -> calculator.ComputeAverageResponse
-	7, // 7: calculator.CalculatorService.FindMaximum:output_type -> calculator.FindMaximumResponse
-	4, // [4:8] is the sub-list for method output_type
-	0, // [0:4] is the sub-list for method input_type
+	8, // 4: calculator.CalculatorService.Sqrt:input_type -> calculator.SqrtRequest
+	1, // 5: calculator.CalculatorService.Sum:output_type -> calculator.CalculatorResponse
+	3, // 6: calculator.CalculatorService.Primes:output_type -> calculator.PrimesResponse
+	5, // 7: calculator.CalculatorService.ComputeAverage:output_type -> calculator.ComputeAverageResponse
+	7, // 8: calculator.CalculatorService.FindMaximum:output_type -> calculator.FindMaximumResponse
+	9, // 9: calculator.CalculatorService.Sqrt:output_type -> calculator.SqrtResponse
+	5, // [5:10] is the sub-list for method output_type
+	0, // [0:5] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
 	0, // [0:0] is the sub-list for extension extendee
 	0, // [0:0] is the sub-list for field type_name
@@ -460,7 +557,7 @@ func file_calculator_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_calculator_proto_rawDesc), len(file_calculator_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   8,
+			NumMessages:   10,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

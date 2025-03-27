@@ -23,6 +23,7 @@ const (
 	CalculatorService_Primes_FullMethodName         = "/calculator.CalculatorService/Primes"
 	CalculatorService_ComputeAverage_FullMethodName = "/calculator.CalculatorService/ComputeAverage"
 	CalculatorService_FindMaximum_FullMethodName    = "/calculator.CalculatorService/FindMaximum"
+	CalculatorService_Sqrt_FullMethodName           = "/calculator.CalculatorService/Sqrt"
 )
 
 // CalculatorServiceClient is the client API for CalculatorService service.
@@ -33,6 +34,7 @@ type CalculatorServiceClient interface {
 	Primes(ctx context.Context, in *PrimesRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[PrimesResponse], error)
 	ComputeAverage(ctx context.Context, opts ...grpc.CallOption) (grpc.ClientStreamingClient[ComputeAverageRequest, ComputeAverageResponse], error)
 	FindMaximum(ctx context.Context, opts ...grpc.CallOption) (grpc.BidiStreamingClient[FindMaximumRequest, FindMaximumResponse], error)
+	Sqrt(ctx context.Context, in *SqrtRequest, opts ...grpc.CallOption) (*SqrtResponse, error)
 }
 
 type calculatorServiceClient struct {
@@ -98,6 +100,16 @@ func (c *calculatorServiceClient) FindMaximum(ctx context.Context, opts ...grpc.
 // This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
 type CalculatorService_FindMaximumClient = grpc.BidiStreamingClient[FindMaximumRequest, FindMaximumResponse]
 
+func (c *calculatorServiceClient) Sqrt(ctx context.Context, in *SqrtRequest, opts ...grpc.CallOption) (*SqrtResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(SqrtResponse)
+	err := c.cc.Invoke(ctx, CalculatorService_Sqrt_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // CalculatorServiceServer is the server API for CalculatorService service.
 // All implementations must embed UnimplementedCalculatorServiceServer
 // for forward compatibility.
@@ -106,6 +118,7 @@ type CalculatorServiceServer interface {
 	Primes(*PrimesRequest, grpc.ServerStreamingServer[PrimesResponse]) error
 	ComputeAverage(grpc.ClientStreamingServer[ComputeAverageRequest, ComputeAverageResponse]) error
 	FindMaximum(grpc.BidiStreamingServer[FindMaximumRequest, FindMaximumResponse]) error
+	Sqrt(context.Context, *SqrtRequest) (*SqrtResponse, error)
 	mustEmbedUnimplementedCalculatorServiceServer()
 }
 
@@ -127,6 +140,9 @@ func (UnimplementedCalculatorServiceServer) ComputeAverage(grpc.ClientStreamingS
 }
 func (UnimplementedCalculatorServiceServer) FindMaximum(grpc.BidiStreamingServer[FindMaximumRequest, FindMaximumResponse]) error {
 	return status.Errorf(codes.Unimplemented, "method FindMaximum not implemented")
+}
+func (UnimplementedCalculatorServiceServer) Sqrt(context.Context, *SqrtRequest) (*SqrtResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Sqrt not implemented")
 }
 func (UnimplementedCalculatorServiceServer) mustEmbedUnimplementedCalculatorServiceServer() {}
 func (UnimplementedCalculatorServiceServer) testEmbeddedByValue()                           {}
@@ -192,6 +208,24 @@ func _CalculatorService_FindMaximum_Handler(srv interface{}, stream grpc.ServerS
 // This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
 type CalculatorService_FindMaximumServer = grpc.BidiStreamingServer[FindMaximumRequest, FindMaximumResponse]
 
+func _CalculatorService_Sqrt_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SqrtRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CalculatorServiceServer).Sqrt(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CalculatorService_Sqrt_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CalculatorServiceServer).Sqrt(ctx, req.(*SqrtRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // CalculatorService_ServiceDesc is the grpc.ServiceDesc for CalculatorService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -202,6 +236,10 @@ var CalculatorService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Sum",
 			Handler:    _CalculatorService_Sum_Handler,
+		},
+		{
+			MethodName: "Sqrt",
+			Handler:    _CalculatorService_Sqrt_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{

@@ -26,5 +26,6 @@ func main() {
 	// doSumNumber(cs)
 	// doPrime(cs)
 	// doAverage(cs)
-	doFindMax(cs)
+	// doFindMax(cs)
+	doSqrt(cs, -16)
 }

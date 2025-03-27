@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package calculator;
+
+option go_package = "github.com/roster90/grp_greet/calculator/proto";
+
+
+service CalculatorService {
+
+    rpc Sum(CalculatorRequest) returns (CalculatorResponse);
+    rpc PrimeNumberDecomposition(CalculatorRequest) returns (stream CalculatorResponse);
+    rpc ComputeAverage(stream CalculatorRequest) returns (CalculatorResponse);
+    rpc FindMaximum(stream CalculatorRequest) returns (CalculatorResponse);
+};
+
+message CalculatorRequest {
+    int32 number1 = 1;
+    int32 number2 = 2;
+  }
+  
+  message CalculatorResponse {
+    int32 result = 1;
+  }

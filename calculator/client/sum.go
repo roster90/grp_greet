@@ -19,7 +19,7 @@ func doSumNumber(c pb.CalculatorServiceClient) {
 	res, err := c.Sum(context.Background(), req)
 
 	if err != nil {
-		log.Fatalf("Failed to greet: %v", err)
+		log.Fatalf("Failed to sum: %v", err)
 	}
 	log.Printf("Sum request is : %d", res.Result)
 }

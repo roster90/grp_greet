@@ -117,6 +117,94 @@ func (x *CalculatorResponse) GetResult() int32 {
 	return 0
 }
 
+type PrimesRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Number        int32                  `protobuf:"varint,1,opt,name=number,proto3" json:"number,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *PrimesRequest) Reset() {
+	*x = PrimesRequest{}
+	mi := &file_calculator_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *PrimesRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PrimesRequest) ProtoMessage() {}
+
+func (x *PrimesRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_calculator_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PrimesRequest.ProtoReflect.Descriptor instead.
+func (*PrimesRequest) Descriptor() ([]byte, []int) {
+	return file_calculator_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *PrimesRequest) GetNumber() int32 {
+	if x != nil {
+		return x.Number
+	}
+	return 0
+}
+
+type PrimesResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Result        int32                  `protobuf:"varint,1,opt,name=result,proto3" json:"result,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *PrimesResponse) Reset() {
+	*x = PrimesResponse{}
+	mi := &file_calculator_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *PrimesResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PrimesResponse) ProtoMessage() {}
+
+func (x *PrimesResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_calculator_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PrimesResponse.ProtoReflect.Descriptor instead.
+func (*PrimesResponse) Descriptor() ([]byte, []int) {
+	return file_calculator_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *PrimesResponse) GetResult() int32 {
+	if x != nil {
+		return x.Result
+	}
+	return 0
+}
+
 var File_calculator_proto protoreflect.FileDescriptor
 
 const file_calculator_proto_rawDesc = "" +
@@ -127,10 +215,14 @@ const file_calculator_proto_rawDesc = "" +
 	"\anumber1\x18\x01 \x01(\x05R\anumber1\x12\x18\n" +
 	"\anumber2\x18\x02 \x01(\x05R\anumber2\",\n" +
 	"\x12CalculatorResponse\x12\x16\n" +
-	"\x06result\x18\x01 \x01(\x05R\x06result2\xd9\x02\n" +
+	"\x06result\x18\x01 \x01(\x05R\x06result\"'\n" +
+	"\rPrimesRequest\x12\x16\n" +
+	"\x06number\x18\x01 \x01(\x05R\x06number\"(\n" +
+	"\x0ePrimesResponse\x12\x16\n" +
+	"\x06result\x18\x01 \x01(\x05R\x06result2\xbf\x02\n" +
 	"\x11CalculatorService\x12D\n" +
-	"\x03Sum\x12\x1d.calculator.CalculatorRequest\x1a\x1e.calculator.CalculatorResponse\x12[\n" +
-	"\x18PrimeNumberDecomposition\x12\x1d.calculator.CalculatorRequest\x1a\x1e.calculator.CalculatorResponse0\x01\x12Q\n" +
+	"\x03Sum\x12\x1d.calculator.CalculatorRequest\x1a\x1e.calculator.CalculatorResponse\x12A\n" +
+	"\x06Primes\x12\x19.calculator.PrimesRequest\x1a\x1a.calculator.PrimesResponse0\x01\x12Q\n" +
 	"\x0eComputeAverage\x12\x1d.calculator.CalculatorRequest\x1a\x1e.calculator.CalculatorResponse(\x01\x12N\n" +
 	"\vFindMaximum\x12\x1d.calculator.CalculatorRequest\x1a\x1e.calculator.CalculatorResponse(\x01B0Z.github.com/roster90/grp_greet/calculator/protob\x06proto3"
 
@@ -146,18 +238,20 @@ func file_calculator_proto_rawDescGZIP() []byte {
 	return file_calculator_proto_rawDescData
 }
 
-var file_calculator_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
+var file_calculator_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
 var file_calculator_proto_goTypes = []any{
 	(*CalculatorRequest)(nil),  // 0: calculator.CalculatorRequest
 	(*CalculatorResponse)(nil), // 1: calculator.CalculatorResponse
+	(*PrimesRequest)(nil),      // 2: calculator.PrimesRequest
+	(*PrimesResponse)(nil),     // 3: calculator.PrimesResponse
 }
 var file_calculator_proto_depIdxs = []int32{
 	0, // 0: calculator.CalculatorService.Sum:input_type -> calculator.CalculatorRequest
-	0, // 1: calculator.CalculatorService.PrimeNumberDecomposition:input_type -> calculator.CalculatorRequest
+	2, // 1: calculator.CalculatorService.Primes:input_type -> calculator.PrimesRequest
 	0, // 2: calculator.CalculatorService.ComputeAverage:input_type -> calculator.CalculatorRequest
 	0, // 3: calculator.CalculatorService.FindMaximum:input_type -> calculator.CalculatorRequest
 	1, // 4: calculator.CalculatorService.Sum:output_type -> calculator.CalculatorResponse
-	1, // 5: calculator.CalculatorService.PrimeNumberDecomposition:output_type -> calculator.CalculatorResponse
+	3, // 5: calculator.CalculatorService.Primes:output_type -> calculator.PrimesResponse
 	1, // 6: calculator.CalculatorService.ComputeAverage:output_type -> calculator.CalculatorResponse
 	1, // 7: calculator.CalculatorService.FindMaximum:output_type -> calculator.CalculatorResponse
 	4, // [4:8] is the sub-list for method output_type
@@ -178,7 +272,7 @@ func file_calculator_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_calculator_proto_rawDesc), len(file_calculator_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   2,
+			NumMessages:   4,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

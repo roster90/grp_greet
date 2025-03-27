@@ -19,10 +19,10 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	CalculatorService_Sum_FullMethodName                      = "/calculator.CalculatorService/Sum"
-	CalculatorService_PrimeNumberDecomposition_FullMethodName = "/calculator.CalculatorService/PrimeNumberDecomposition"
-	CalculatorService_ComputeAverage_FullMethodName           = "/calculator.CalculatorService/ComputeAverage"
-	CalculatorService_FindMaximum_FullMethodName              = "/calculator.CalculatorService/FindMaximum"
+	CalculatorService_Sum_FullMethodName            = "/calculator.CalculatorService/Sum"
+	CalculatorService_Primes_FullMethodName         = "/calculator.CalculatorService/Primes"
+	CalculatorService_ComputeAverage_FullMethodName = "/calculator.CalculatorService/ComputeAverage"
+	CalculatorService_FindMaximum_FullMethodName    = "/calculator.CalculatorService/FindMaximum"
 )
 
 // CalculatorServiceClient is the client API for CalculatorService service.
@@ -30,7 +30,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type CalculatorServiceClient interface {
 	Sum(ctx context.Context, in *CalculatorRequest, opts ...grpc.CallOption) (*CalculatorResponse, error)
-	PrimeNumberDecomposition(ctx context.Context, in *CalculatorRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[CalculatorResponse], error)
+	Primes(ctx context.Context, in *PrimesRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[PrimesResponse], error)
 	ComputeAverage(ctx context.Context, opts ...grpc.CallOption) (grpc.ClientStreamingClient[CalculatorRequest, CalculatorResponse], error)
 	FindMaximum(ctx context.Context, opts ...grpc.CallOption) (grpc.ClientStreamingClient[CalculatorRequest, CalculatorResponse], error)
 }
@@ -53,13 +53,13 @@ func (c *calculatorServiceClient) Sum(ctx context.Context, in *CalculatorRequest
 	return out, nil
 }
 
-func (c *calculatorServiceClient) PrimeNumberDecomposition(ctx context.Context, in *CalculatorRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[CalculatorResponse], error) {
+func (c *calculatorServiceClient) Primes(ctx context.Context, in *PrimesRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[PrimesResponse], error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	stream, err := c.cc.NewStream(ctx, &CalculatorService_ServiceDesc.Streams[0], CalculatorService_PrimeNumberDecomposition_FullMethodName, cOpts...)
+	stream, err := c.cc.NewStream(ctx, &CalculatorService_ServiceDesc.Streams[0], CalculatorService_Primes_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &grpc.GenericClientStream[CalculatorRequest, CalculatorResponse]{ClientStream: stream}
+	x := &grpc.GenericClientStream[PrimesRequest, PrimesResponse]{ClientStream: stream}
 	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
@@ -70,7 +70,7 @@ func (c *calculatorServiceClient) PrimeNumberDecomposition(ctx context.Context, 
 }
 
 // This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type CalculatorService_PrimeNumberDecompositionClient = grpc.ServerStreamingClient[CalculatorResponse]
+type CalculatorService_PrimesClient = grpc.ServerStreamingClient[PrimesResponse]
 
 func (c *calculatorServiceClient) ComputeAverage(ctx context.Context, opts ...grpc.CallOption) (grpc.ClientStreamingClient[CalculatorRequest, CalculatorResponse], error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
@@ -103,7 +103,7 @@ type CalculatorService_FindMaximumClient = grpc.ClientStreamingClient[Calculator
 // for forward compatibility.
 type CalculatorServiceServer interface {
 	Sum(context.Context, *CalculatorRequest) (*CalculatorResponse, error)
-	PrimeNumberDecomposition(*CalculatorRequest, grpc.ServerStreamingServer[CalculatorResponse]) error
+	Primes(*PrimesRequest, grpc.ServerStreamingServer[PrimesResponse]) error
 	ComputeAverage(grpc.ClientStreamingServer[CalculatorRequest, CalculatorResponse]) error
 	FindMaximum(grpc.ClientStreamingServer[CalculatorRequest, CalculatorResponse]) error
 	mustEmbedUnimplementedCalculatorServiceServer()
@@ -119,8 +119,8 @@ type UnimplementedCalculatorServiceServer struct{}
 func (UnimplementedCalculatorServiceServer) Sum(context.Context, *CalculatorRequest) (*CalculatorResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Sum not implemented")
 }
-func (UnimplementedCalculatorServiceServer) PrimeNumberDecomposition(*CalculatorRequest, grpc.ServerStreamingServer[CalculatorResponse]) error {
-	return status.Errorf(codes.Unimplemented, "method PrimeNumberDecomposition not implemented")
+func (UnimplementedCalculatorServiceServer) Primes(*PrimesRequest, grpc.ServerStreamingServer[PrimesResponse]) error {
+	return status.Errorf(codes.Unimplemented, "method Primes not implemented")
 }
 func (UnimplementedCalculatorServiceServer) ComputeAverage(grpc.ClientStreamingServer[CalculatorRequest, CalculatorResponse]) error {
 	return status.Errorf(codes.Unimplemented, "method ComputeAverage not implemented")
@@ -167,16 +167,16 @@ func _CalculatorService_Sum_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
-func _CalculatorService_PrimeNumberDecomposition_Handler(srv interface{}, stream grpc.ServerStream) error {
-	m := new(CalculatorRequest)
+func _CalculatorService_Primes_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(PrimesRequest)
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(CalculatorServiceServer).PrimeNumberDecomposition(m, &grpc.GenericServerStream[CalculatorRequest, CalculatorResponse]{ServerStream: stream})
+	return srv.(CalculatorServiceServer).Primes(m, &grpc.GenericServerStream[PrimesRequest, PrimesResponse]{ServerStream: stream})
 }
 
 // This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type CalculatorService_PrimeNumberDecompositionServer = grpc.ServerStreamingServer[CalculatorResponse]
+type CalculatorService_PrimesServer = grpc.ServerStreamingServer[PrimesResponse]
 
 func _CalculatorService_ComputeAverage_Handler(srv interface{}, stream grpc.ServerStream) error {
 	return srv.(CalculatorServiceServer).ComputeAverage(&grpc.GenericServerStream[CalculatorRequest, CalculatorResponse]{ServerStream: stream})
@@ -206,8 +206,8 @@ var CalculatorService_ServiceDesc = grpc.ServiceDesc{
 	},
 	Streams: []grpc.StreamDesc{
 		{
-			StreamName:    "PrimeNumberDecomposition",
-			Handler:       _CalculatorService_PrimeNumberDecomposition_Handler,
+			StreamName:    "Primes",
+			Handler:       _CalculatorService_Primes_Handler,
 			ServerStreams: true,
 		},
 		{

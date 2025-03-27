@@ -17,13 +17,13 @@ type Server struct {
 
 func main() {
 	lis, err := net.Listen("tcp", addr)
-
 	if err != nil {
 		log.Fatalf("Failed to listen: %v", err)
 	}
-	log.Printf("Listening on %s", addr)
-	s := grpc.NewServer()
 
+	log.Printf("Listening on %s", addr)
+
+	s := grpc.NewServer()
 	pd.RegisterCalculatorServiceServer(s, &Server{})
 
 	if err = s.Serve(lis); err != nil {

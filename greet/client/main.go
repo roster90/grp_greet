@@ -23,5 +23,6 @@ func main() {
 
 	cs := pb.NewGreetServiceClient(conn)
 
-	doGreet(cs)
+	// doGreet(cs)
+	doGreetManyTime(cs)
 }

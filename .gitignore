@@ -1,0 +1,35 @@
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+
+# Output of the go coverage tool
+*.coverprofile
+
+# Dependency directories (vendor/)
+vendor/
+
+# Go workspace file (if using Go 1.18+ with workspaces)
+go.work
+go.work.sum
+
+# Logs
+*.log
+
+# IDE/editor configs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Generated protobuf/grpc files (optional, if you want to ignore them)
+# *.pb.go
+# *_grpc.pb.go

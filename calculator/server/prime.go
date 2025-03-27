@@ -10,7 +10,7 @@ func (s *Server) Primes(req *pd.PrimesRequest, stream pd.CalculatorService_Prime
 	log.Printf(" Greet function was invoked with %v\n", req)
 
 	N := req.Number
-	var k int32 = 2
+	k := int64(2)
 
 	for N > 1 { // giống như while N > 1
 

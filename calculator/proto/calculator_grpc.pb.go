@@ -31,7 +31,7 @@ const (
 type CalculatorServiceClient interface {
 	Sum(ctx context.Context, in *CalculatorRequest, opts ...grpc.CallOption) (*CalculatorResponse, error)
 	Primes(ctx context.Context, in *PrimesRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[PrimesResponse], error)
-	ComputeAverage(ctx context.Context, opts ...grpc.CallOption) (grpc.ClientStreamingClient[CalculatorRequest, CalculatorResponse], error)
+	ComputeAverage(ctx context.Context, opts ...grpc.CallOption) (grpc.ClientStreamingClient[ComputeAverageRequest, ComputeAverageResponse], error)
 	FindMaximum(ctx context.Context, opts ...grpc.CallOption) (grpc.ClientStreamingClient[CalculatorRequest, CalculatorResponse], error)
 }
 
@@ -72,18 +72,18 @@ func (c *calculatorServiceClient) Primes(ctx context.Context, in *PrimesRequest,
 // This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
 type CalculatorService_PrimesClient = grpc.ServerStreamingClient[PrimesResponse]
 
-func (c *calculatorServiceClient) ComputeAverage(ctx context.Context, opts ...grpc.CallOption) (grpc.ClientStreamingClient[CalculatorRequest, CalculatorResponse], error) {
+func (c *calculatorServiceClient) ComputeAverage(ctx context.Context, opts ...grpc.CallOption) (grpc.ClientStreamingClient[ComputeAverageRequest, ComputeAverageResponse], error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	stream, err := c.cc.NewStream(ctx, &CalculatorService_ServiceDesc.Streams[1], CalculatorService_ComputeAverage_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &grpc.GenericClientStream[CalculatorRequest, CalculatorResponse]{ClientStream: stream}
+	x := &grpc.GenericClientStream[ComputeAverageRequest, ComputeAverageResponse]{ClientStream: stream}
 	return x, nil
 }
 
 // This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type CalculatorService_ComputeAverageClient = grpc.ClientStreamingClient[CalculatorRequest, CalculatorResponse]
+type CalculatorService_ComputeAverageClient = grpc.ClientStreamingClient[ComputeAverageRequest, ComputeAverageResponse]
 
 func (c *calculatorServiceClient) FindMaximum(ctx context.Context, opts ...grpc.CallOption) (grpc.ClientStreamingClient[CalculatorRequest, CalculatorResponse], error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
@@ -104,7 +104,7 @@ type CalculatorService_FindMaximumClient = grpc.ClientStreamingClient[Calculator
 type CalculatorServiceServer interface {
 	Sum(context.Context, *CalculatorRequest) (*CalculatorResponse, error)
 	Primes(*PrimesRequest, grpc.ServerStreamingServer[PrimesResponse]) error
-	ComputeAverage(grpc.ClientStreamingServer[CalculatorRequest, CalculatorResponse]) error
+	ComputeAverage(grpc.ClientStreamingServer[ComputeAverageRequest, ComputeAverageResponse]) error
 	FindMaximum(grpc.ClientStreamingServer[CalculatorRequest, CalculatorResponse]) error
 	mustEmbedUnimplementedCalculatorServiceServer()
 }
@@ -122,7 +122,7 @@ func (UnimplementedCalculatorServiceServer) Sum(context.Context, *CalculatorRequ
 func (UnimplementedCalculatorServiceServer) Primes(*PrimesRequest, grpc.ServerStreamingServer[PrimesResponse]) error {
 	return status.Errorf(codes.Unimplemented, "method Primes not implemented")
 }
-func (UnimplementedCalculatorServiceServer) ComputeAverage(grpc.ClientStreamingServer[CalculatorRequest, CalculatorResponse]) error {
+func (UnimplementedCalculatorServiceServer) ComputeAverage(grpc.ClientStreamingServer[ComputeAverageRequest, ComputeAverageResponse]) error {
 	return status.Errorf(codes.Unimplemented, "method ComputeAverage not implemented")
 }
 func (UnimplementedCalculatorServiceServer) FindMaximum(grpc.ClientStreamingServer[CalculatorRequest, CalculatorResponse]) error {
@@ -179,11 +179,11 @@ func _CalculatorService_Primes_Handler(srv interface{}, stream grpc.ServerStream
 type CalculatorService_PrimesServer = grpc.ServerStreamingServer[PrimesResponse]
 
 func _CalculatorService_ComputeAverage_Handler(srv interface{}, stream grpc.ServerStream) error {
-	return srv.(CalculatorServiceServer).ComputeAverage(&grpc.GenericServerStream[CalculatorRequest, CalculatorResponse]{ServerStream: stream})
+	return srv.(CalculatorServiceServer).ComputeAverage(&grpc.GenericServerStream[ComputeAverageRequest, ComputeAverageResponse]{ServerStream: stream})
 }
 
 // This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type CalculatorService_ComputeAverageServer = grpc.ClientStreamingServer[CalculatorRequest, CalculatorResponse]
+type CalculatorService_ComputeAverageServer = grpc.ClientStreamingServer[ComputeAverageRequest, ComputeAverageResponse]
 
 func _CalculatorService_FindMaximum_Handler(srv interface{}, stream grpc.ServerStream) error {
 	return srv.(CalculatorServiceServer).FindMaximum(&grpc.GenericServerStream[CalculatorRequest, CalculatorResponse]{ServerStream: stream})

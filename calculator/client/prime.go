@@ -13,7 +13,7 @@ func doPrime(c pb.CalculatorServiceClient) {
 	log.Printf("Starting to do a Greet RPC...")
 
 	req := &pb.PrimesRequest{
-		Number: 120,
+		Number: 12234455,
 	}
 
 	stream, err := c.Primes(context.Background(), req)
@@ -22,7 +22,6 @@ func doPrime(c pb.CalculatorServiceClient) {
 		log.Fatalf("Failed to greet: %v", err)
 	}
 
-	var result string = ""
 	for {
 		msg, err := stream.Recv()
 
@@ -34,8 +33,7 @@ func doPrime(c pb.CalculatorServiceClient) {
 		if err != nil {
 			log.Fatalf("Error while reading stream: %v", err)
 		}
-		result += "*" + string(msg.GetResult())
+		log.Printf("Received prime number: %v", msg.GetResult())
 	}
-	log.Printf("Prime number: %s", result)
 
 }

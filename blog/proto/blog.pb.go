@@ -134,6 +134,50 @@ func (x *BlogId) GetId() string {
 	return ""
 }
 
+type BlogFilter struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Condition     string                 `protobuf:"bytes,1,opt,name=condition,proto3" json:"condition,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *BlogFilter) Reset() {
+	*x = BlogFilter{}
+	mi := &file_blog_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *BlogFilter) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*BlogFilter) ProtoMessage() {}
+
+func (x *BlogFilter) ProtoReflect() protoreflect.Message {
+	mi := &file_blog_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use BlogFilter.ProtoReflect.Descriptor instead.
+func (*BlogFilter) Descriptor() ([]byte, []int) {
+	return file_blog_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *BlogFilter) GetCondition() string {
+	if x != nil {
+		return x.Condition
+	}
+	return ""
+}
+
 var File_blog_proto protoreflect.FileDescriptor
 
 const file_blog_proto_rawDesc = "" +
@@ -146,7 +190,10 @@ const file_blog_proto_rawDesc = "" +
 	"\x05title\x18\x03 \x01(\tR\x05title\x12\x18\n" +
 	"\acontent\x18\x04 \x01(\tR\acontent\"\x18\n" +
 	"\x06BlogId\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id2\xf4\x01\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\"*\n" +
+	"\n" +
+	"BlogFilter\x12\x1c\n" +
+	"\tcondition\x18\x01 \x01(\tR\tcondition2\xa7\x02\n" +
 	"\vBlogService\x12&\n" +
 	"\n" +
 	"CreateBlog\x12\n" +
@@ -159,6 +206,8 @@ const file_blog_proto_rawDesc = "" +
 	"\n" +
 	"DeleteBlog\x12\f.blog.BlogId\x1a\x16.google.protobuf.Empty\x121\n" +
 	"\tListBlogs\x12\x16.google.protobuf.Empty\x1a\n" +
+	".blog.Blog0\x01\x121\n" +
+	"\x0fListBlogsFilter\x12\x10.blog.BlogFilter\x1a\n" +
 	".blog.Blog0\x01B*Z(github.com/roster90/grp_greet/blog/protob\x06proto3"
 
 var (
@@ -173,25 +222,28 @@ func file_blog_proto_rawDescGZIP() []byte {
 	return file_blog_proto_rawDescData
 }
 
-var file_blog_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
+var file_blog_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
 var file_blog_proto_goTypes = []any{
 	(*Blog)(nil),          // 0: blog.Blog
 	(*BlogId)(nil),        // 1: blog.BlogId
-	(*emptypb.Empty)(nil), // 2: google.protobuf.Empty
+	(*BlogFilter)(nil),    // 2: blog.BlogFilter
+	(*emptypb.Empty)(nil), // 3: google.protobuf.Empty
 }
 var file_blog_proto_depIdxs = []int32{
 	0, // 0: blog.BlogService.CreateBlog:input_type -> blog.Blog
 	1, // 1: blog.BlogService.ReadBlog:input_type -> blog.BlogId
 	0, // 2: blog.BlogService.UpdateBlog:input_type -> blog.Blog
 	1, // 3: blog.BlogService.DeleteBlog:input_type -> blog.BlogId
-	2, // 4: blog.BlogService.ListBlogs:input_type -> google.protobuf.Empty
-	1, // 5: blog.BlogService.CreateBlog:output_type -> blog.BlogId
-	0, // 6: blog.BlogService.ReadBlog:output_type -> blog.Blog
-	2, // 7: blog.BlogService.UpdateBlog:output_type -> google.protobuf.Empty
-	2, // 8: blog.BlogService.DeleteBlog:output_type -> google.protobuf.Empty
-	0, // 9: blog.BlogService.ListBlogs:output_type -> blog.Blog
-	5, // [5:10] is the sub-list for method output_type
-	0, // [0:5] is the sub-list for method input_type
+	3, // 4: blog.BlogService.ListBlogs:input_type -> google.protobuf.Empty
+	2, // 5: blog.BlogService.ListBlogsFilter:input_type -> blog.BlogFilter
+	1, // 6: blog.BlogService.CreateBlog:output_type -> blog.BlogId
+	0, // 7: blog.BlogService.ReadBlog:output_type -> blog.Blog
+	3, // 8: blog.BlogService.UpdateBlog:output_type -> google.protobuf.Empty
+	3, // 9: blog.BlogService.DeleteBlog:output_type -> google.protobuf.Empty
+	0, // 10: blog.BlogService.ListBlogs:output_type -> blog.Blog
+	0, // 11: blog.BlogService.ListBlogsFilter:output_type -> blog.Blog
+	6, // [6:12] is the sub-list for method output_type
+	0, // [0:6] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
 	0, // [0:0] is the sub-list for extension extendee
 	0, // [0:0] is the sub-list for field type_name
@@ -208,7 +260,7 @@ func file_blog_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_blog_proto_rawDesc), len(file_blog_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   2,
+			NumMessages:   3,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

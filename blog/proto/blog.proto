@@ -17,6 +17,10 @@ message BlogId {
   string id = 1;
 }
 
+
+message BlogFilter {
+    string condition = 1;
+}
 service BlogService {
   // Requests the creation for a Blog
   // Returns Status.INTERNAL if the blog couldn't be created due to Db error
@@ -43,4 +47,8 @@ service BlogService {
   // Requests access to all the Blogs in Db
   // Returns stream of Blogs
   rpc ListBlogs(google.protobuf.Empty) returns (stream Blog);
+
+  rpc ListBlogsFilter(BlogFilter)returns (stream Blog);
+
+
 }

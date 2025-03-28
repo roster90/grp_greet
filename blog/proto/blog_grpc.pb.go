@@ -20,11 +20,12 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	BlogService_CreateBlog_FullMethodName = "/blog.BlogService/CreateBlog"
-	BlogService_ReadBlog_FullMethodName   = "/blog.BlogService/ReadBlog"
-	BlogService_UpdateBlog_FullMethodName = "/blog.BlogService/UpdateBlog"
-	BlogService_DeleteBlog_FullMethodName = "/blog.BlogService/DeleteBlog"
-	BlogService_ListBlogs_FullMethodName  = "/blog.BlogService/ListBlogs"
+	BlogService_CreateBlog_FullMethodName      = "/blog.BlogService/CreateBlog"
+	BlogService_ReadBlog_FullMethodName        = "/blog.BlogService/ReadBlog"
+	BlogService_UpdateBlog_FullMethodName      = "/blog.BlogService/UpdateBlog"
+	BlogService_DeleteBlog_FullMethodName      = "/blog.BlogService/DeleteBlog"
+	BlogService_ListBlogs_FullMethodName       = "/blog.BlogService/ListBlogs"
+	BlogService_ListBlogsFilter_FullMethodName = "/blog.BlogService/ListBlogsFilter"
 )
 
 // BlogServiceClient is the client API for BlogService service.
@@ -52,6 +53,7 @@ type BlogServiceClient interface {
 	// Requests access to all the Blogs in Db
 	// Returns stream of Blogs
 	ListBlogs(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (grpc.ServerStreamingClient[Blog], error)
+	ListBlogsFilter(ctx context.Context, in *BlogFilter, opts ...grpc.CallOption) (grpc.ServerStreamingClient[Blog], error)
 }
 
 type blogServiceClient struct {
@@ -121,6 +123,25 @@ func (c *blogServiceClient) ListBlogs(ctx context.Context, in *emptypb.Empty, op
 // This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
 type BlogService_ListBlogsClient = grpc.ServerStreamingClient[Blog]
 
+func (c *blogServiceClient) ListBlogsFilter(ctx context.Context, in *BlogFilter, opts ...grpc.CallOption) (grpc.ServerStreamingClient[Blog], error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	stream, err := c.cc.NewStream(ctx, &BlogService_ServiceDesc.Streams[1], BlogService_ListBlogsFilter_FullMethodName, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &grpc.GenericClientStream[BlogFilter, Blog]{ClientStream: stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
+type BlogService_ListBlogsFilterClient = grpc.ServerStreamingClient[Blog]
+
 // BlogServiceServer is the server API for BlogService service.
 // All implementations must embed UnimplementedBlogServiceServer
 // for forward compatibility.
@@ -146,6 +167,7 @@ type BlogServiceServer interface {
 	// Requests access to all the Blogs in Db
 	// Returns stream of Blogs
 	ListBlogs(*emptypb.Empty, grpc.ServerStreamingServer[Blog]) error
+	ListBlogsFilter(*BlogFilter, grpc.ServerStreamingServer[Blog]) error
 	mustEmbedUnimplementedBlogServiceServer()
 }
 
@@ -170,6 +192,9 @@ func (UnimplementedBlogServiceServer) DeleteBlog(context.Context, *BlogId) (*emp
 }
 func (UnimplementedBlogServiceServer) ListBlogs(*emptypb.Empty, grpc.ServerStreamingServer[Blog]) error {
 	return status.Errorf(codes.Unimplemented, "method ListBlogs not implemented")
+}
+func (UnimplementedBlogServiceServer) ListBlogsFilter(*BlogFilter, grpc.ServerStreamingServer[Blog]) error {
+	return status.Errorf(codes.Unimplemented, "method ListBlogsFilter not implemented")
 }
 func (UnimplementedBlogServiceServer) mustEmbedUnimplementedBlogServiceServer() {}
 func (UnimplementedBlogServiceServer) testEmbeddedByValue()                     {}
@@ -275,6 +300,17 @@ func _BlogService_ListBlogs_Handler(srv interface{}, stream grpc.ServerStream) e
 // This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
 type BlogService_ListBlogsServer = grpc.ServerStreamingServer[Blog]
 
+func _BlogService_ListBlogsFilter_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(BlogFilter)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(BlogServiceServer).ListBlogsFilter(m, &grpc.GenericServerStream[BlogFilter, Blog]{ServerStream: stream})
+}
+
+// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
+type BlogService_ListBlogsFilterServer = grpc.ServerStreamingServer[Blog]
+
 // BlogService_ServiceDesc is the grpc.ServiceDesc for BlogService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -303,6 +339,11 @@ var BlogService_ServiceDesc = grpc.ServiceDesc{
 		{
 			StreamName:    "ListBlogs",
 			Handler:       _BlogService_ListBlogs_Handler,
+			ServerStreams: true,
+		},
+		{
+			StreamName:    "ListBlogsFilter",
+			Handler:       _BlogService_ListBlogsFilter_Handler,
 			ServerStreams: true,
 		},
 	},

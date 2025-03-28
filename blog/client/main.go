@@ -24,6 +24,9 @@ func main() {
 	cs := pb.NewBlogServiceClient(conn)
 
 	// createBlog(cs)
-	doReadBlog(cs, "67e65095f1adcb156b922e8a")
 
+	// doUpdateBlog(cs, "67e65095f1adcb156b922e8a")
+	// doReadBlog(cs, "67e65095f1adcb156b922e8a")
+	// doGetBlogs(cs)
+	doGetBlogsFiltered(cs)
 }

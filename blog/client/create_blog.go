@@ -12,8 +12,8 @@ func createBlog(c pb.BlogServiceClient) {
 
 	req := &pb.Blog{
 		AuthorId: "Roster",
-		Title:    "My First Blog",
-		Content:  "Content of the first blog",
+		Title:    "My second Blog",
+		Content:  "Content of the second blog",
 	}
 
 	res, err := (c).CreateBlog(context.Background(), req)

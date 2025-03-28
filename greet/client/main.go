@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"time"
 
 	pb "github.com/roster90/grp_greet/greet/proto"
 
@@ -26,5 +27,6 @@ func main() {
 	// doGreet(cs)
 	// doGreetManyTime(cs)
 	// doLongGreet(cs)
-	doGreetEveryone(cs)
+	// doGreetEveryone(cs)
+	doGreetWithDeadline(cs, 5*time.Second)
 }

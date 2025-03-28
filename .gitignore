@@ -13,6 +13,7 @@
 # Dependency directories (vendor/)
 vendor/
 certs/
+bin/
 
 # Go workspace file (if using Go 1.18+ with workspaces)
 go.work

@@ -8,18 +8,18 @@ import (
 	pb "github.com/roster90/grp_greet/blog/proto"
 )
 
-func doGetBlogsFiltered(client pb.BlogServiceClient) {
+func doGetBlogsFiltered(client pb.BlogServiceClient, cond string) {
 
 	log.Printf("doGetBlogsFiltered to do a doGetBlogsFiltered RPC...")
 
 	filter := &pb.BlogFilter{
-		Condition: `{"author_id": "Roster"}`,
+		Condition: cond,
 	}
 
-	stream, err := client.ListBlogsFilter(context.Background(), filter)
+	stream, err := client.ListBlogsFiltered(context.Background(), filter)
 
 	if err != nil {
-		log.Fatalf("Failed to greet: %v", err)
+		log.Fatalf("Failed to doGetBlogsFiltered: %v", err)
 	}
 
 	for {

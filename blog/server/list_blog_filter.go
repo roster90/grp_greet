@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"encoding/json"
+	"log"
 
 	pb "github.com/roster90/grp_greet/blog/proto"
 	"go.mongodb.org/mongo-driver/bson"
@@ -10,17 +11,26 @@ import (
 	"google.golang.org/grpc/status"
 )
 
-func (s *Server) ListBlogsFiltered(req *pb.BlogFilter, stream pb.BlogService_ListBlogsFilterServer) error {
+func (s *Server) ListBlogsFiltered(req *pb.BlogFilter, stream pb.BlogService_ListBlogsFilteredServer) error {
+
+	log.Printf("ListBlogsFiltered function was invoked grpc")
+
 	var filter bson.M
 
-	if err := json.Unmarshal([]byte(req.Condition), &filter); err != nil {
+	condition := req.GetCondition()
+
+	if err := json.Unmarshal([]byte(condition), &filter); err != nil {
+
 		return status.Errorf(codes.InvalidArgument, "Invalid filter condition: %v", err)
 	}
+
+	log.Printf("ListBlogsFiltered function was invoked with %v\n", filter)
 
 	cursor, err := collection.Find(context.Background(), filter)
 	if err != nil {
 		return status.Errorf(codes.Internal, "Failed to find blogs: %v", err)
 	}
+
 	defer cursor.Close(context.Background())
 
 	for cursor.Next(context.Background()) {

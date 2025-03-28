@@ -193,7 +193,7 @@ const file_blog_proto_rawDesc = "" +
 	"\x02id\x18\x01 \x01(\tR\x02id\"*\n" +
 	"\n" +
 	"BlogFilter\x12\x1c\n" +
-	"\tcondition\x18\x01 \x01(\tR\tcondition2\xa7\x02\n" +
+	"\tcondition\x18\x01 \x01(\tR\tcondition2\xa9\x02\n" +
 	"\vBlogService\x12&\n" +
 	"\n" +
 	"CreateBlog\x12\n" +
@@ -206,8 +206,8 @@ const file_blog_proto_rawDesc = "" +
 	"\n" +
 	"DeleteBlog\x12\f.blog.BlogId\x1a\x16.google.protobuf.Empty\x121\n" +
 	"\tListBlogs\x12\x16.google.protobuf.Empty\x1a\n" +
-	".blog.Blog0\x01\x121\n" +
-	"\x0fListBlogsFilter\x12\x10.blog.BlogFilter\x1a\n" +
+	".blog.Blog0\x01\x123\n" +
+	"\x11ListBlogsFiltered\x12\x10.blog.BlogFilter\x1a\n" +
 	".blog.Blog0\x01B*Z(github.com/roster90/grp_greet/blog/protob\x06proto3"
 
 var (
@@ -235,13 +235,13 @@ var file_blog_proto_depIdxs = []int32{
 	0, // 2: blog.BlogService.UpdateBlog:input_type -> blog.Blog
 	1, // 3: blog.BlogService.DeleteBlog:input_type -> blog.BlogId
 	3, // 4: blog.BlogService.ListBlogs:input_type -> google.protobuf.Empty
-	2, // 5: blog.BlogService.ListBlogsFilter:input_type -> blog.BlogFilter
+	2, // 5: blog.BlogService.ListBlogsFiltered:input_type -> blog.BlogFilter
 	1, // 6: blog.BlogService.CreateBlog:output_type -> blog.BlogId
 	0, // 7: blog.BlogService.ReadBlog:output_type -> blog.Blog
 	3, // 8: blog.BlogService.UpdateBlog:output_type -> google.protobuf.Empty
 	3, // 9: blog.BlogService.DeleteBlog:output_type -> google.protobuf.Empty
 	0, // 10: blog.BlogService.ListBlogs:output_type -> blog.Blog
-	0, // 11: blog.BlogService.ListBlogsFilter:output_type -> blog.Blog
+	0, // 11: blog.BlogService.ListBlogsFiltered:output_type -> blog.Blog
 	6, // [6:12] is the sub-list for method output_type
 	0, // [0:6] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name

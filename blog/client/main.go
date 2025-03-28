@@ -28,5 +28,7 @@ func main() {
 	// doUpdateBlog(cs, "67e65095f1adcb156b922e8a")
 	// doReadBlog(cs, "67e65095f1adcb156b922e8a")
 	// doGetBlogs(cs)
-	doGetBlogsFiltered(cs)
+
+	doDeleteBlog(cs, "67e65095f1adcb156b922e8a")
+	doGetBlogsFiltered(cs, `{"author_id": "Roster"}`)
 }

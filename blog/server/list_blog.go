@@ -11,7 +11,7 @@ import (
 	"google.golang.org/protobuf/types/known/emptypb"
 )
 
-func (s *Server) ListBlogs(req *emptypb.Empty, stream pb.BlogService_ListBlogsFilterServer) error {
+func (s *Server) ListBlogs(req *emptypb.Empty, stream pb.BlogService_ListBlogsServer) error {
 	log.Printf("ListBlogs function was invoked with %v\n", req)
 
 	if collection == nil {
@@ -26,7 +26,9 @@ func (s *Server) ListBlogs(req *emptypb.Empty, stream pb.BlogService_ListBlogsFi
 	defer cursor.Close(context.Background())
 
 	for cursor.Next(context.Background()) {
+
 		var blog BlogItem
+
 		if err := cursor.Decode(&blog); err != nil {
 			return status.Errorf(codes.Internal, "Decode error: %v", err)
 		}

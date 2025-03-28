@@ -48,7 +48,7 @@ service BlogService {
   // Returns stream of Blogs
   rpc ListBlogs(google.protobuf.Empty) returns (stream Blog);
 
-  rpc ListBlogsFilter(BlogFilter)returns (stream Blog);
+  rpc ListBlogsFiltered(BlogFilter)returns (stream Blog);
 
 
 }

@@ -13,6 +13,7 @@ func doGetBlogs(c pb.BlogServiceClient) {
 	log.Printf("doGetListBlog to do a ListBlog RPC...")
 
 	stream, err := c.ListBlogs(context.Background(), &emptypb.Empty{})
+
 	if err != nil {
 		log.Fatalf("Failed to greet: %v", err)
 	}
